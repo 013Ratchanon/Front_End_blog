@@ -16,6 +16,8 @@ const Edit = () => {
     cover: "",
   });
 
+  const [coverFile, setCoverFile] = useState(null); // เก็บไฟล์ใหม่
+  const [coverPreview, setCoverPreview] = useState(""); // preview
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -34,6 +36,7 @@ const Edit = () => {
             return;
           }
           setPost(fetchedPost);
+          setCoverPreview(fetchedPost.cover || "");
         }
       } catch (error) {
         Swal.fire(
@@ -54,6 +57,14 @@ const Edit = () => {
     setPost((prev) => ({ ...prev, [name]: value }));
   };
 
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setCoverFile(file);
+      setCoverPreview(URL.createObjectURL(file));
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!post.title || !post.content) {
@@ -62,7 +73,15 @@ const Edit = () => {
     }
 
     try {
-      const response = await PostService.updatePost(id, post);
+      const formData = new FormData();
+      formData.append("title", post.title);
+      formData.append("summary", post.summary);
+      formData.append("content", post.content);
+      if (coverFile) {
+        formData.append("cover", coverFile);
+      }
+
+      const response = await PostService.updatePost(id, formData);
       if (response.status === 200) {
         Swal.fire("Success", "Post updated successfully", "success").then(
           () => {
@@ -128,17 +147,16 @@ const Edit = () => {
 
           {/* Cover */}
           <div>
-            <label className="block font-semibold mb-2">Cover Image URL</label>
+            <label className="block font-semibold mb-2">Cover Image</label>
             <input
-              type="text"
-              name="cover"
-              value={post.cover}
-              onChange={handleChange}
+              type="file"
+              accept="image/*"
+              onChange={handleFileChange}
               className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-300 text-black"
             />
-            {post.cover && (
+            {coverPreview && (
               <img
-                src={post.cover}
+                src={coverPreview}
                 alt="cover"
                 className="mt-4 rounded-xl shadow-md w-full max-h-64 object-cover border border-gray-200"
               />

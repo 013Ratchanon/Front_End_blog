@@ -20,7 +20,7 @@ const Create = () => {
   const handleChange = (e) => {
     const { name, value } = e.target;
     if (name === "file") {
-      setPost({ ...post, [name]: e.targer.files[0] });
+      setPost({ ...post, [name]: e.target.files[0] });
     } else {
       setPost({ ...post, [name]: value });
     }
@@ -96,7 +96,7 @@ const Create = () => {
                 <input
                   type="file"
                   name="file"
-                  value={post.file}
+                  accept="image/*"
                   onChange={handleChange}
                   placeholder="https://example.com/image.jpg"
                   className="input input-bordered w-full text-white border-gray-600 bg-gray-700 placeholder-gray-400"
