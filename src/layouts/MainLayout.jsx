@@ -20,7 +20,7 @@ const MainLayout = ({ isLoggedIn, onLogout }) => {
       </div>
 
       {/* Main content */}
-      <main className="flex-grow container mx-auto px-4 py-4 mt-16 mb-20">
+      <main className="">
         <Outlet />
       </main>
 
