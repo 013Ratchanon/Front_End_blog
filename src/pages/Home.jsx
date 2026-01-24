@@ -27,7 +27,7 @@ const Home = () => {
   return (
     <div className="container mx-auto mt-10">
       <h1 className="text-3xl font-bold text-center mb-8">Latest Posts</h1>
-      <div className="border bg-white w-full h-4"></div>
+      
 
       {posts.length === 0 && (
         <h2 className="text-center text-gray-500 text-xl mt-10">
