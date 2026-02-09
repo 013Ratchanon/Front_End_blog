@@ -1,4 +1,4 @@
-import { createBrowserRouter } from "react-router";
+import { createHashRouter } from "react-router-dom";
 import Layout from "../components/Layout";
 import Home from "../pages/Home";
 import Edit from "../pages/Edit";
@@ -8,12 +8,12 @@ import Register from "../pages/Register";
 import PostDetail from "../pages/PostDetail";
 import Author from "../pages/Author";
 
-const router = createBrowserRouter([
+const router = createHashRouter([
   {
     path: "/",
     element: <Layout />,
     children: [
-      { path: "", element: <Home /> },
+      { index: true, element: <Home /> },
       { path: "edit/:id", element: <Edit /> },
       { path: "create", element: <Create /> },
       { path: "login", element: <Login /> },
